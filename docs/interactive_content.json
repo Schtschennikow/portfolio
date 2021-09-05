@@ -2,7 +2,7 @@
     {
         "title" : "Пригожин",
         "text" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        "pic" : "./picsInteractiveContent/PictorialChart0001.png",
+        "pic" : "./picsInteractiveContent/YeastDiagram0001.png",
         "link" : "./YeastDiagram0001/index.html",
         "mode" : "square"
     },
@@ -16,14 +16,14 @@
     {
         "title" : "Шпилькин",
         "text" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        "pic" : "./picsInteractiveContent/PictorialChart0001.png",
+        "pic" : "./picsInteractiveContent/LineChart0002.png",
         "link" : "./LineChart0002/index.html",
         "mode" : "square"
     },
     {
         "title" : "Депутатовка",
         "text" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        "pic" : "./picsInteractiveContent/PictorialChart0001.png",
+        "pic" : "./picsInteractiveContent/HexMap0001.png",
         "link" : "./HexMap0001/index.html",
         "mode" : "square"
     },

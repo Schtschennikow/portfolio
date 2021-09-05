@@ -12,67 +12,73 @@
 </head>
 <body>
 
-    <!-- <div id="main"> -->
-    <div id="menu">
-        <ul id="menuUi">
-            <li id="li0" class="mli intText textBig bl">Bio</li>
-            <li id="li1" class="mli intText textSmall bl">Interactive graphics</li>
-            <li id="li2" class="mli intText textSmall bl">New age</li>
-            <li id="li3" class="mli intText textSmall bl">The days of past</li>
-            <li id="li4" class="mli intText textSmall bl">Contacts & Links</li>
-        </ul>
-    </div>
-
-    <div id="content">
-
-        <div  id="li0div" class="lidiv">
-            <h1 class="bl">Artem Shchennikov</h1>
-            <dif id="bio">
-                <span class="textBig">
-                    data journalist / developer / designer of infographics
-                </span>
-            </dif>
-        </div>
-
-        <div id="li1div" class="lidiv">
-            <div class="subHeader">
-                <span class="textSmall">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </span>
-            </div>
-            <div id="li1divCntnt">
+    <div id="mainContent">
+        <div id="menu">
+            <div id="menuFix">
+                <ul>
+                    <li id="li0" class="mli intText textBig bl">Bio</li>
+                    <li id="li1" class="mli intText textSmall bl">Interactive graphics</li>
+                    <li id="li2" class="mli intText textSmall bl">New age</li>
+                    <li id="li3" class="mli intText textSmall bl">The days of past</li>
+                    <li id="li4" class="mli intText textSmall bl">Contacts & Links</li>
+                </ul>
             </div>
         </div>
 
-        <div id="li2div" class="lidiv">
-            <div class="subHeader">
-                <span class="textSmall">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </span>
+        <div id="content">
+
+            <div  id="li0div" class="lidiv">
+                <h1 class="bl">Artem Shchennikov</h1>
+                <dif id="bio">
+                    <span class="textBig">
+                        data journalist / developer / designer of infographics
+                    </span>
+                </dif>
             </div>
-            <div id="li2divCntnt">
+
+            <div id="li1div" class="lidiv">
+                <div class="subHeader">
+                    <span class="textSmall">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                    </span>
+                </div>
+                <div id="li1divCntnt">
+                </div>
             </div>
+
+            <div id="li2div" class="lidiv">
+                <div class="subHeader">
+                    <span class="textSmall">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                    </span>
+                </div>
+                <div id="li2divCntnt" class="col4">
+                </div>
+            </div>
+
+            <div id="li3div" class="lidiv">
+                <div class="subHeader">
+                    <span class="textSmall">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                    </span>
+                </div>
+                <div id="li3divCntnt" class="col4">
+
+                </div>
+            </div>
+
+            <div id="li4div" class="lidiv">
+                <div class="subHeader">
+                    <span class="textSmall">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                    </span>
+                </div>
+            </div>
+
         </div>
-
-        <div id="li3div" class="lidiv">
-            <div class="subHeader">
-                <span class="textSmall">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </span>
-            </div>
-            <div id="li3divCntnt">
-
-            </div>
-        </div>
-
-        <div id="li4div" class="lidiv">
-        </div>
-
     </div>
 
     <script>
-        
-        // Run menu
 
         var test = true;
 
@@ -88,13 +94,13 @@
 
                 $('html, body').stop().animate({
                     scrollTop: disaredElement.offset().top
-                }, 500);
+                }, 250);
 
                 setTimeout(
                     function() {
                         test = true;
                     },
-                    500
+                    250
                 );
 
             }
@@ -133,15 +139,19 @@
         var data = {};
 
         $.getJSON("./interactive_content.json", function(json) {
+
+            var contentW = $("#content").width(),
+                sqW = (contentW - contentW * 0.0025) / 2;
             
             $.each( json, function( i, val ) {
 
-                ind = `g${i}`
+                ind = `g${i}I`
 
                 cntnr = $( "<div>", {
                     "id": `${ind}cntnr`,
                     "class": val.mode,
-                    "style": `background-image: url('${val.pic}')`
+                    "height": `${sqW}px`,
+
                 }).appendTo( "#li1divCntnt" );
 
                 showCntnr = $( "<div>", {
@@ -150,11 +160,16 @@
                     
                 }).appendTo( cntnr );
 
+                $( "<img>", {
+                    "src": val.pic,
+                    "height": "100%",
+                    "width": "100%"
+                }).appendTo( showCntnr );
+
                 $( "<div>", {
                     "id": ind,
                     "class": "show textBig wh intTextWh",
                     "hidden": "true",
-
                     html: "Activate"
                 }).appendTo( showCntnr );
 
@@ -165,16 +180,43 @@
         });
 
         $.getJSON("./new_content.json", function(json) {
+
+            var contentW = $("#content").width(),
+                sqW = (contentW - contentW * 0.0025 * 3) / 4;
             
             $.each( json, function( i, val ) {
 
-                ind = `g${i}`
+                ind = `g${i}N`
 
                 cntnr = $( "<div>", {
                     "id": `${ind}cntnr`,
                     "class": val.mode,
-                    "style": `background-image: url('${val.pic}')`
+                    "height": `${sqW}px` 
                 }).appendTo( "#li2divCntnt" );
+
+                $( "<img>", {
+                    "src": val.pic,
+                    "width": "100%"
+                }).appendTo( cntnr );
+
+            });
+
+        });
+
+        $.getJSON("./new_content.json", function(json) {
+
+            var contentW = $("#content").width(),
+                sqW = (contentW - contentW * 0.0025 * 3) / 4;
+            
+            $.each( json, function( i, val ) {
+
+                ind = `g${i}O`
+
+                cntnr = $( "<div>", {
+                    "id": `${ind}cntnr`,
+                    "class": val.mode,
+                    "height": `${sqW}px`
+                }).appendTo( "#li3divCntnt" );
 
             });
 
@@ -232,6 +274,8 @@
 
                 }).appendTo( $( `#${curId}cntnr` ) );
 
+                // alert(data[curId]);
+
                 $( "<span>", {
                     "id": `${curId}close`,
                     "class": "x textBig wh intTextWh",
@@ -260,6 +304,5 @@
         );
 
     </script>
-    <!-- </div> -->
-
+    
 </body>
