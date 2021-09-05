@@ -138,91 +138,59 @@
 
         var data = {};
 
-        $.getJSON("./interactive_content.json", function(json) {
+        function loadPics(path, dest, cols, isInter, suf) {
+            $.getJSON(path, function(json) {
 
-            var contentW = $("#content").width(),
-                sqW = (contentW - contentW * 0.0025) / 2;
-            
-            $.each( json, function( i, val ) {
+                var contentW = $("#content").width(),
+                    sqW;
 
-                ind = `g${i}I`
+                if (cols == 4) {
+                    sqW = (contentW - contentW * 0.0025 * 3) / 4;
+                } else {
+                    sqW = (contentW - contentW * 0.0025) / 2;
+                }
 
-                cntnr = $( "<div>", {
-                    "id": `${ind}cntnr`,
-                    "class": val.mode,
-                    "height": `${sqW}px`,
+                $.each( json, function( i, val ) {
 
-                }).appendTo( "#li1divCntnt" );
+                    ind = `g${i}${suf}`
 
-                showCntnr = $( "<div>", {
-                    "id": `${ind}showCntnr`,
-                    "class": "showCntnr",
-                    
-                }).appendTo( cntnr );
+                    cntnr = $( "<div>", {
+                        "id": `${ind}cntnr`,
+                        "class": val.mode,
+                        "height": `${sqW}px` 
+                    }).appendTo( `#${dest}` );
 
-                $( "<img>", {
-                    "src": val.pic,
-                    "height": "100%",
-                    "width": "100%"
-                }).appendTo( showCntnr );
+                    showCntnr = $( "<div>", {
+                        "id": `${ind}showCntnr`,
+                        "class": "showCntnr",
+                    }).appendTo( cntnr );
 
-                $( "<div>", {
-                    "id": ind,
-                    "class": "show textBig wh intTextWh",
-                    "hidden": "true",
-                    html: "Activate"
-                }).appendTo( showCntnr );
+                    $( "<img>", {
+                        "src": val.pic,
+                        "height": "100%",
+                        "width": "100%"
+                    }).appendTo( showCntnr );
 
-                data[ind] = val.link;
+                    if (isInter) {
+                        
+                        $( "<div>", {
+                            "id": ind,
+                            "class": "show textBig wh intTextWh",
+                            "hidden": "true",
+                            html: "Activate"
+                        }).appendTo( showCntnr );
+                    }
 
-            });
+                    data[ind] = val.link;
 
-        });
-
-        $.getJSON("./new_content.json", function(json) {
-
-            var contentW = $("#content").width(),
-                sqW = (contentW - contentW * 0.0025 * 3) / 4;
-            
-            $.each( json, function( i, val ) {
-
-                ind = `g${i}N`
-
-                cntnr = $( "<div>", {
-                    "id": `${ind}cntnr`,
-                    "class": val.mode,
-                    "height": `${sqW}px` 
-                }).appendTo( "#li2divCntnt" );
-
-                $( "<img>", {
-                    "src": val.pic,
-                    "width": "100%"
-                }).appendTo( cntnr );
+                });
 
             });
+        }
 
-        });
-
-        $.getJSON("./new_content.json", function(json) {
-
-            var contentW = $("#content").width(),
-                sqW = (contentW - contentW * 0.0025 * 3) / 4;
-            
-            $.each( json, function( i, val ) {
-
-                ind = `g${i}O`
-
-                cntnr = $( "<div>", {
-                    "id": `${ind}cntnr`,
-                    "class": val.mode,
-                    "height": `${sqW}px`
-                }).appendTo( "#li3divCntnt" );
-
-            });
-
-        });
-
-        // Actions
+        loadPics("./new_content.json", "li3divCntnt", 4, false);
+        loadPics("./new_content.json", "li2divCntnt", 4, false);
+        loadPics("./interactive_content.json", "li1divCntnt", 2, true);
 
         $(document).on(
             "mouseover", ".intText", function() {
