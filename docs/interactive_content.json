@@ -3,35 +3,35 @@
         "title" : "Пригожин",
         "text" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
         "pic" : "./picsInteractiveContent/PictorialChart0001.png",
-        "link" : "../YeastDiagram0001/index.html",
+        "link" : "./YeastDiagram0001/index.html",
         "mode" : "square"
     },
     {
         "title" : "Рогозин",
         "text" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
         "pic" : "./picsInteractiveContent/PictorialChart0001.png",
-        "link" : "../PictorialChart0001/index.html",
+        "link" : "./PictorialChart0001/index.html",
         "mode" : "square"
     },
     {
         "title" : "Шпилькин",
         "text" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
         "pic" : "./picsInteractiveContent/PictorialChart0001.png",
-        "link" : "../LineChart0002/index.html",
+        "link" : "./LineChart0002/index.html",
         "mode" : "square"
     },
     {
         "title" : "Депутатовка",
         "text" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
         "pic" : "./picsInteractiveContent/PictorialChart0001.png",
-        "link" : "../HexMap0001/index.html",
+        "link" : "./HexMap0001/index.html",
         "mode" : "square"
     },
     {
         "title" : "ОБСЕ",
         "text" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
         "pic" : "./picsInteractiveContent/Scroll0001.png",
-        "link" : "../Scroll0001/index.html",
+        "link" : "./Scroll0001/index.html",
         "mode" : "rect"
     }
 ]
