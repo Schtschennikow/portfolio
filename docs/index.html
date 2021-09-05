@@ -14,6 +14,7 @@
 
     <div id="mainContent">
         <div id="menu">
+
             <div id="menuFix">
                 <ul>
                     <li id="li0" class="mli intText textBig bl">Bio</li>
@@ -23,6 +24,10 @@
                     <li id="li4" class="mli intText textSmall bl">Links & Contacts</li>
                 </ul>
             </div>
+
+            <div id="infoFix">
+            </div>
+
         </div>
 
         <div id="content">
@@ -136,6 +141,14 @@
 
         // Finish page
 
+        function fixW() {
+            var w = $("#menu").width();
+            $( "#menuFix" ).css({"width": `${ w }px`});
+            $( "#infoFix" ).css({"width": `${ w }px`});
+        };
+
+        fixW();
+
         var data = {};
 
         function loadPics(path, dest, cols, isInter, suf) {
@@ -156,7 +169,7 @@
 
                     cntnr = $( "<div>", {
                         "id": `${ind}cntnr`,
-                        "class": val.mode,
+                        "class": `${val.mode} pikpook`,
                         "height": `${sqW}px` 
                     }).appendTo( `#${dest}` );
 
@@ -181,16 +194,19 @@
                         }).appendTo( showCntnr );
                     }
 
-                    data[ind] = val.link;
+                    data[ind] = {
+                        "link": val.link,
+                        "text": val.text
+                    };
 
                 });
 
             });
         }
 
-        loadPics("./new_content.json", "li3divCntnt", 4, false);
-        loadPics("./new_content.json", "li2divCntnt", 4, false);
-        loadPics("./interactive_content.json", "li1divCntnt", 2, true);
+        loadPics("./new_content.json", "li3divCntnt", 4, false, "O");
+        loadPics("./new_content.json", "li2divCntnt", 4, false, "N");
+        loadPics("./interactive_content.json", "li1divCntnt", 2, true, "I");
 
         $(document).on(
             "mouseover", ".intText", function() {
@@ -226,6 +242,41 @@
         );
 
         $(document).on(
+            "mouseover", ".pikpook", function() {
+
+                // ind = `${$( this ).attr("id").replace("cntnr", "")}`
+
+                console.log(ind);
+
+                var infoDiv = $("<div>", {
+                    "id": "info",
+                    "class": "info"
+                }).appendTo( $( "#infoFix" ) );
+
+                $( "<span>", {
+                    "class": "textSmall",
+                    html: "About:<br>"
+                }).appendTo( infoDiv );
+
+                $( "<span>", {
+                    "class": "textSmaller",
+                    // html: "text"
+                    html: data[ind]["text"]
+                }).appendTo( infoDiv );
+
+            }
+        );
+        $(document).on(
+            "mouseout", ".pikpook", function() {
+
+                // ind = `${$( this ).attr("id").replace("cntnr", "")}`
+
+                $( `#info` ).remove();
+            }
+        );
+        
+
+        $(document).on(
             "click", ".show", function() {
 
                 let curId = $( this ).attr("id");
@@ -237,12 +288,10 @@
                     "height": "100%",
                     "width": "100%",
                     "class": "interGr",
-                    "src": data[curId],
+                    "src": data[curId]["link"],
                     "frameborder": 0
 
                 }).appendTo( $( `#${curId}cntnr` ) );
-
-                // alert(data[curId]);
 
                 $( "<span>", {
                     "id": `${curId}close`,
@@ -263,6 +312,8 @@
             "click", ".x",  function() {
 
                 let curId = $( this ).attr("id");
+
+                $( `#info` ).remove();
 
                 $( `#${curId.replace("close", "showCntnr")}` ).removeAttr("hidden");
                 $( `#${curId.replace("close", "intrctv")}` ).remove();
