@@ -1,0 +1,265 @@
+<head>
+    <title>Artem Shchennikov</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style> body { margin: 0; } </style>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&display=swap" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&display=swap" rel="stylesheet"> -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+</head>
+<body>
+
+    <!-- <div id="main"> -->
+    <div id="menu">
+        <ul id="menuUi">
+            <li id="li0" class="mli intText textBig bl">Bio</li>
+            <li id="li1" class="mli intText textSmall bl">Interactive graphics</li>
+            <li id="li2" class="mli intText textSmall bl">New age</li>
+            <li id="li3" class="mli intText textSmall bl">The days of past</li>
+            <li id="li4" class="mli intText textSmall bl">Contacts & Links</li>
+        </ul>
+    </div>
+
+    <div id="content">
+
+        <div  id="li0div" class="lidiv">
+            <h1 class="bl">Artem Shchennikov</h1>
+            <dif id="bio">
+                <span class="textBig">
+                    data journalist / developer / designer of infographics
+                </span>
+            </dif>
+        </div>
+
+        <div id="li1div" class="lidiv">
+            <div class="subHeader">
+                <span class="textSmall">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </span>
+            </div>
+            <div id="li1divCntnt">
+            </div>
+        </div>
+
+        <div id="li2div" class="lidiv">
+            <div class="subHeader">
+                <span class="textSmall">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </span>
+            </div>
+            <div id="li2divCntnt">
+            </div>
+        </div>
+
+        <div id="li3div" class="lidiv">
+            <div class="subHeader">
+                <span class="textSmall">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </span>
+            </div>
+            <div id="li3divCntnt">
+
+            </div>
+        </div>
+
+        <div id="li4div" class="lidiv">
+        </div>
+
+    </div>
+
+    <script>
+        
+        // Run menu
+
+        var test = true;
+
+        $(document).on(
+            "click", ".mli",  function() {
+
+                test = false;
+
+                $( ".mli" ).removeClass("textBig").addClass("textSmall");
+                $( this ).removeClass("textSmall").addClass("textBig");
+
+                disaredElement = $( `#${$( this ).attr("id")}div` )
+
+                $('html, body').stop().animate({
+                    scrollTop: disaredElement.offset().top
+                }, 500);
+
+                setTimeout(
+                    function() {
+                        test = true;
+                    },
+                    500
+                );
+
+            }
+        );
+
+        var lastId,
+        scrollItems = $( ".lidiv" ).map(
+            function() {
+                return $(this).attr("id");
+            }
+        );
+
+        $(window).scroll(function(){
+
+            var fromTop = $(this).scrollTop() + $( "#menu" ).height()/2;
+            
+            var cur = scrollItems.map(function(){
+                if ($(`#${this}`).offset().top < fromTop)
+                return this;
+            });
+            
+            id = cur[cur.length-1];
+            
+            if (lastId !== id) {
+                lastId = id;
+
+                if (test) {
+                    $( ".mli" ).removeClass("textBig").addClass("textSmall");
+                    $( `#${id.replace("div", "")}` ).removeClass("textSmall").addClass("textBig");
+                };
+            }                   
+        });
+
+        // Finish page
+
+        var data = {};
+
+        $.getJSON("./interactive_content.json", function(json) {
+            
+            $.each( json, function( i, val ) {
+
+                ind = `g${i}`
+
+                cntnr = $( "<div>", {
+                    "id": `${ind}cntnr`,
+                    "class": val.mode,
+                    "style": `background-image: url('${val.pic}')`
+                }).appendTo( "#li1divCntnt" );
+
+                showCntnr = $( "<div>", {
+                    "id": `${ind}showCntnr`,
+                    "class": "showCntnr",
+                    
+                }).appendTo( cntnr );
+
+                $( "<div>", {
+                    "id": ind,
+                    "class": "show textBig wh intTextWh",
+                    "hidden": "true",
+
+                    html: "Activate"
+                }).appendTo( showCntnr );
+
+                data[ind] = val.link;
+
+            });
+
+        });
+
+        $.getJSON("./new_content.json", function(json) {
+            
+            $.each( json, function( i, val ) {
+
+                ind = `g${i}`
+
+                cntnr = $( "<div>", {
+                    "id": `${ind}cntnr`,
+                    "class": val.mode,
+                    "style": `background-image: url('${val.pic}')`
+                }).appendTo( "#li2divCntnt" );
+
+            });
+
+        });
+
+        // Actions
+
+        $(document).on(
+            "mouseover", ".intText", function() {
+                $( this ).removeClass("bl").addClass("red");
+            }
+        );
+        $(document).on(
+            "mouseleave", ".intText", function() {
+                $( this ).removeClass("red").addClass("bl");
+            }
+        );
+
+        $(document).on(
+            "mouseover", ".intTextWh", function() {
+                $( this ).removeClass("wh").addClass("red");
+            }
+        );
+        $(document).on(
+            "mouseleave", ".intTextWh", function() {
+                $( this ).removeClass("red").addClass("wh");
+            }
+        );
+
+        $(document).on(
+            "mouseover", ".square, .rect", function() {
+                $(`#${$( this ).attr("id").replace("cntnr", "")}`).removeAttr("hidden");
+            }
+        );
+        $(document).on(
+            "mouseleave", ".square, .rect", function() {
+                $(`#${$( this ).attr("id").replace("cntnr", "")}`).attr("hidden", "ture");
+            }
+        );
+
+        $(document).on(
+            "click", ".show", function() {
+
+                let curId = $( this ).attr("id");
+
+                $( `#${curId}showCntnr` ).attr("hidden", "true");
+
+                $( "<iframe>", {
+                    "id": `${curId}intrctv`,
+                    "height": "100%",
+                    "width": "100%",
+                    "class": "interGr",
+                    "src": data[curId],
+                    "frameborder": 0
+
+                }).appendTo( $( `#${curId}cntnr` ) );
+
+                $( "<span>", {
+                    "id": `${curId}close`,
+                    "class": "x textBig wh intTextWh",
+
+                    html: "✕"
+
+                }).appendTo( 
+                    
+                    $( "<div>", {
+                        "class": "close"
+                    }).appendTo( $( `#${curId}cntnr` ) )
+                );
+            }
+        );
+
+        $(document).on(
+            "click", ".x",  function() {
+
+                let curId = $( this ).attr("id");
+
+                $( `#${curId.replace("close", "showCntnr")}` ).removeAttr("hidden");
+                $( `#${curId.replace("close", "intrctv")}` ).remove();
+                $( this ).remove();
+                
+            }
+        );
+
+    </script>
+    <!-- </div> -->
+
+</body>

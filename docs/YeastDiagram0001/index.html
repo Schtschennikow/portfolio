@@ -1,0 +1,364 @@
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style> body { margin: 0; } </style>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+
+</head>
+<body bgcolor="#212226" style="overflow: hidden;">
+    <div id="headers">
+        <h1 class="header1">Захват рынка школьного питания в&#160;Москве</h1>
+        <!-- <h2 id="header2"></h2> -->
+    </div>
+    <div id="info" class=textSmall>
+        <span>
+            <span id="lc1"></span>
+            <span class=textWhite> картель</span>
+        </span>
+        <span class="infoPadding"></span>
+        <br class="infoBreak">
+        <br class="infoBreak">
+        <span>
+            <span id="lc2"></span>
+            <span class=textWhite> другие</span>
+        </span>
+        <span class="infoPadding"></span>
+        <br class="infoBreak">
+        <br class="infoBreak">
+        <span>
+            <span id="lc3"></span>
+            <span class=textWhite> неизвестно</span>
+        </span>
+    </div>
+    <div id="source" class=textSmaller>
+        <span class=textWhite>Источник: <a id="chatdata">Госзакупки</a></span>
+    </div>
+    <img id="logo" src="https://raw.githubusercontent.com/NovayaData/viz/master/docs/pics/LogoWhite.svg">
+    <div id="slidecontainer">
+        <input type="range" class="on" id="sliderYear" min="2011" max="2020" step="1">
+        <div class="sliderticks" id="sliderticks">
+            <p id="p2011">2011</p>
+            <p id="p2012">2012</p>
+            <p id="p2013">2013</p>
+            <p id="p2014">2014</p>
+            <p id="p2015">2015</p>
+            <p id="p2016">2016</p>
+            <p id="p2017">2017</p>
+            <p id="p2018">2018</p>
+            <p id="p2019">2019</p>
+            <p id="p2020">2020</p>
+        </div>
+    </div>
+    <div id="bigNumberF" class="textWhite">
+        <span class="textSmall">За всё время:</span>
+        <br>
+        <span id="bigNumber" class="header1"></span>
+    </div>
+
+    <div id="bub" style = "height: 100%;  width: 100%;">
+        <script>
+            const DataPath = "../data/YeastDiagram0001/zakhvat-rynka-shkolnogo-pitaniya-v-moskve.csv";
+            document.getElementById("chatdata").setAttribute("href", DataPath)
+
+            var slider = document.getElementById("sliderYear");
+            const maxStep = 2020;
+
+            var year = "2011";
+            document.getElementById("p"+year.toString()).setAttribute("style", "visibility: visible;")
+            const width = document.getElementById('bub').clientWidth;
+            const height = document.getElementById('bub').clientHeight;
+
+            const scale = 1.2;
+
+            const colors = {
+                "картель": "rgb(191,56,29)",
+                "другие": "rgb(0,172,229)",
+                "неизвестно": "rgb(151,152,153)"
+            };
+
+            function addLegend(i) {
+                d3.select("#lc"+i)
+                    .append("svg")
+                    .attr("class", "legendRectSvg")
+                    .append("circle")
+                    .attr("class", "legendRectSvg")
+                    .attr("fill", Object.values(colors)[i-1])
+                    .attr("r", document.getElementsByClassName("legendRectSvg")[0].clientHeight/2)
+                    .attr("cx", document.getElementsByClassName("legendRectSvg")[0].clientHeight/2)
+                    .attr("cy", document.getElementsByClassName("legendRectSvg")[0].clientHeight/2);
+            };
+
+            for (let i = 1; i <= 3; i++) {
+                addLegend(i);
+            };
+
+            var minR = 1.5;
+            var sizer;
+            var center = [width / 2, height / 2];
+
+            if (height <= 400 || width <= 400 ) {
+                minR = 1;
+                document.getElementById("sliderticks").setAttribute("style", "visibility: hidden;");
+                sizer = height*0.33;
+                // center = [width / 2, height / 2 - 20];
+            } else {
+                // center = [width / 2, height / 2];
+                sizer = height*0.4;
+            };
+
+            const delimiter = 100000000000;
+
+            function getBigNumberText(number) {
+                if (number < 1000000000) {
+                    return ((number / 1000000).toFixed(1)).replace(".", ",").replace(",0", "") + " млн";
+                } else {
+                    return ((number / 1000000000).toFixed(1)).replace(".", ",").replace(",0", "") + " млрд";
+                }
+            };
+
+            function getValue(i) {
+                if (i > 0) {
+                    return i/delimiter*sizer+minR;
+                } else {
+                    return 0;
+                }
+            };
+
+            bigNumberYear = {};
+
+            function getBubbleData(d) {
+
+                bubbleData = {}
+
+                for (let i = 2011; i <= 2020; i++) {
+                    yearName = i.toString();
+                    yearNumber = parseInt(d[yearName]);
+
+                    yearValue = getValue(yearNumber);
+                    yearValueText = getBigNumberText(yearNumber);
+                    
+                    if (!(yearName in bigNumberYear)) {
+                        bigNumberYear[yearName] = yearNumber
+                    } else {
+                        bigNumberYear[yearName] += yearNumber;
+                    };
+
+                    bubbleData[yearName]=yearValue;
+                    bubbleData["s"+yearName]=yearValueText;
+                };
+
+                bubbleData["name"] = d.name;
+                bubbleData["color"] = colors[d.group];
+
+                return bubbleData;
+            };
+
+            d3.csv(DataPath, function(d) {
+
+                    return getBubbleData(d);
+                    
+                }).then(function(data) {
+
+            for (let i = 2011; i <= 2020; i++) {
+                bigNumberYear[i.toString()] = getBigNumberText(bigNumberYear[i.toString()])
+            };
+
+            const rescale = isNaN(data[0].x);
+
+            // var svg_dx = 100;
+            // var svg_dy = 100;
+
+            var zoom = d3.zoom()
+                .scaleExtent([1, 4])
+
+                // .translateExtent([[svg_dx, svg_dy], [width-(svg_dx*0.75), height-(svg_dy*0.75)]])
+                // .extent([[svg_dx, svg_dy], [width-(svg_dx*0.75), height-(svg_dy*0.75)]])
+
+                .translateExtent([[0, 0], [width, height]])
+                .extent([[0, 0], [width, height]])
+                .on("zoom", function(event){
+
+                    // svg_dx = svg.node().getBBox().x
+                    // svg_dy = svg.node().getBBox().y
+                    
+                    d3.select("#bg").attr("transform", event.transform);
+                });
+
+            const svg = d3.select("#bub")
+                .append("svg")
+                .attr("viewBox", [0, 0, width, height])
+                .call(zoom)
+                .append("g")
+                .attr("id", "bg");
+            
+            const g = d3.select("#bg");
+
+            const tooltip = d3.select("#bub")
+                .append("div")
+                .style("opacity", 0)
+                .attr("class", "textSmall")
+                .attr("id", "tt");
+
+            const simulation = d3.forceSimulation(data)
+                .force("x", d3.forceX(center[0]).strength(0.008))
+                .force("y", d3.forceY(center[1]).strength(0.008))
+                .force("collide", d3.forceCollide().radius(d => d[year]+minR*2));
+
+            simulation.nodes(data)
+                .on("tick", ticked);
+
+            function ticked() {
+                bubbles
+                    .attr("cx", d => d.x)
+                    .attr("cy", d => d.y)
+            };
+
+            var simulationTimer;
+
+            function simulationUpdate() {
+
+                if (simulationTimer) {
+                    clearTimeout(simulationTimer);
+                };
+
+                simulation.restart();
+                simulation
+                    .alpha(0.4)
+                    .alphaTarget(0.4)
+                    .restart();
+                simulation.force("x").initialize(data);
+                simulation.force("collide").initialize(data);
+
+                simulationTimer = setTimeout( function(){
+                    simulation.stop();
+                } ,200000);
+
+            };
+
+            function bubblesUpdate() {
+                bubbles.transition().attr("r", d => d[year]);
+            };
+
+            function updateAll() {
+                bigNumber.innerHTML = bigNumberYear[year];
+                simulationUpdate();
+                bubblesUpdate();
+            }
+
+            function smartTooltip(d) {
+                x = d.clientX;
+
+                if (d.clientX > width/2) {
+                    strLen  = document.getElementById("tt").clientWidth
+                    d3.select("#tt").style("max-width", width - (width - x + 40))
+                    x = x - strLen;
+                    return (x-10) + "px";
+                } else {
+                    d3.select("#tt").style("max-width", width - x - 40)
+                    return (x+10) + "px";
+                }
+            };
+
+            const bigNumber = document.getElementById("bigNumber");
+
+            const bubbles = g.selectAll("circle")
+                .data(data)
+                .enter()
+                .append("circle")
+                .attr("class", "animatedbub")
+                .attr("r", 0)
+                .attr("fill", d => d.color)
+                .on("mouseover", function(d) {
+                    var currentBigNumber = d.srcElement.__data__["s"+year];
+                    bigNumber.innerHTML = (currentBigNumber).toString();
+                    tooltip
+                        .style("opacity", 1)
+                    d3.selectAll(".animatedbub").attr("opacity", 0.5)
+                    d3.select(this).attr("opacity", 1)
+                    d3.select(this).attr("margin", 1)
+                    d3.select(this).style("stroke", d3.select(this).attr("fill"))
+                    d3.select(this).style("stroke-width", minR/4)
+                    d3.select("#info").style("opacity", 0.5)
+                })
+                .on("mousemove", function(d) {
+                    tooltip
+                        .html(d.srcElement.__data__.name)
+                        .style("left", smartTooltip(d))
+                        .style("top", (
+                            d.clientY - document.getElementById("tt").clientHeight/2
+                            ) + "px")
+                })
+                .on("mouseleave", function(d) {
+                    bigNumber.innerHTML = bigNumberYear[year];
+                    d3.select(this).style("stroke-width", 0)
+                    tooltip.style("opacity", 0)
+                    d3.selectAll(".animatedbub").attr("opacity", 1)
+                    d3.select("#info").style("opacity", 1)
+                });
+
+            setTimeout(() => {
+                    simulationUpdate();
+                    bubblesUpdate();
+            }, 750);
+
+            if (rescale) {
+                for (const node of data) {
+                node.x = node.x * scale + center[0];
+                node.y = node.y * scale + center[1];
+                }
+            }
+
+            function yearMobile(newYear) {
+                document.getElementById("p"+year.toString()).removeAttribute("style", "visibility: visible;")
+                year = newYear;
+                document.getElementById("p"+year.toString()).setAttribute("style", "visibility: visible;")
+            };
+
+            slider.oninput = function() {
+                slider.setAttribute('class', "off");
+                yearMobile(this.value)
+                updateAll();
+            };
+
+            function sliderPlus() {
+                var oldValue = parseInt(slider.getAttribute('value'));
+
+                if (oldValue < maxStep & slider.getAttribute('class') == "on") {
+                    var newValue = oldValue+1;
+                    slider.setAttribute('value', newValue);
+                    yearMobile(newValue.toString())
+                    updateAll();
+                } else if (oldValue == maxStep) {
+                    slider.setAttribute('class', "off");
+                    updateAll();
+                }
+            };
+
+            var timer;
+
+            function sliderPlay() {
+                yearMobile(2011);
+                slider.setAttribute('value', "2011");
+                slider.setAttribute('class', "on");
+                updateAll();
+
+                function fantomClick() {
+                        timer = setTimeout( function(){
+                        sliderPlus();
+                        if (slider.getAttribute('class') == "on") {
+                            timer = setTimeout(arguments.callee, 1000)
+                        }
+                    },1000);
+                };
+
+                fantomClick();
+            };
+
+            sliderPlay();
+
+            });
+        </script>
+    </div>
+</body>
