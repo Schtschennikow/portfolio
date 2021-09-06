@@ -48,6 +48,7 @@ $(window).scroll(function(){
         lastId = id;
 
         desactivate(true);
+        killShowConteiner();
 
         if (menuOnScroll) {
             $( ".mli" ).removeClass("textBig").addClass("textSmall");
@@ -59,9 +60,14 @@ $(window).scroll(function(){
 // Finish page
 
 function fixW() {
-    var w = $("#menu").width();
-    $( "#menuFix" ).css({"width": `${ w }px`});
-    $( "#infoFix" ).css({"width": `${ w }px`});
+    var mw = $("#menu").width();
+    var cw = $("#content").width();
+
+    $( "#showConteiner" ).css({"width": `${ cw }px`});
+
+    $( "#menuFix" ).css({"width": `${ mw }px`});
+    $( "#infoFix" ).css({"width": `${ mw }px`});
+    $( "#info" ).css({"width": `${ mw - 21 }px`});
 };
 
 fixW();
@@ -119,7 +125,6 @@ function loadPics(path, dest, cols, isInter, suf) {
             }
 
             data[ind] = {
-                // "link": val.link,
                 "text": val.text
             };
 
@@ -167,13 +172,39 @@ $(document).on(
     }
 );
 
+var smalPicsListener = true;
+$(document).on(
+    "mouseover", ".square, .rect, .squareSmall", function() {
+        var curId = $( this ).attr("id").replace("cntnr", "")
+        showInfo(curId);
+    }
+);
+$(document).on(
+    "mouseleave", ".square, .rect, .squareSmall", function() {
+        if (smalPicsListener) {
+            killInfo();
+        }
+    }
+);
+
+function showInfo(curId) {
+    $( "#info" ).css({visibility: "visible"});
+    $( "#infoText" ).text( data[curId]["text"] );
+};
+
+function killInfo() {
+    $( "#info" ).css({visibility: "hidden"});
+    $( "#infoText" ).text( "" );
+};
+
 
 function addSchtsch(curId) {
     var timer = $( "<img>", {
         "src": "./pics/schtsch.gif",
+        "class": "centerImg",
         "height": "100%"
     }).appendTo( $( `#${curId}schtsch` ) ); 
-}
+};
 
 function delSchtsch(curId) {
     var timer = $( `#${curId}schtsch` ).find( "img" );
@@ -187,9 +218,49 @@ function desactivate(fadeIt) {
         curId = activeX.attr("id");
         closer(curId, fadeIt);
     };
-
 };
 
+
+$(document).on(
+    "click", ".squareSmall", function() {
+
+        smalPicsListener = false;
+
+        var showConteiner = $( "#showConteiner" );
+        showConteiner.css( {display: "flex"} );
+        $( "#limb" ).fadeIn("fast");
+        showConteiner.addClass("showConteiner");
+
+        var picSrc = $( this ).find( "img" ).attr( "src" );
+        showConteiner.find( "#showImg" ).attr( "src", picSrc );
+        
+        var curId = $( this ).attr("id").replace("cntnr", "");
+        showInfo(curId);
+});
+
+function killShowConteiner() {
+
+    smalPicsListener = true;
+
+    var showConteiner = $( ".showConteiner" );
+
+    if (showConteiner.length) {
+
+        showConteiner.css( {display: "none"} );
+        $( "#limb" ).fadeOut("fast");
+
+        killInfo();
+
+    };
+};
+
+$(document).on(
+    "click", "#limb, .showConteiner",  function(e) {
+        if (e.target.id !== "showImg") {
+            killShowConteiner();
+        }
+    }
+);
 
 $(document).on(
     "click", ".show", function() {
@@ -213,6 +284,9 @@ $(document).on(
             "frameborder": 0
         }).css({visibility: "hidden", "opacity": 0}).appendTo( $( `#${curId}cntnr` ) );
 
+        // adding x
+        addX(curId);
+
         curfFrame.on("load", function() {
             setTimeout(
                 function() {
@@ -222,8 +296,6 @@ $(document).on(
                     fadeOutActiveImg();
                     delSchtsch(curId);
 
-                    // adding x
-                    addX(curId);
                 },
                 500
             )
@@ -264,7 +336,8 @@ function closer(curId, fadeIt) {
 
     if (fadeIt) {
         fadeInActiveImg();
-    }  
+    }
+
 };
 
 $(document).on(

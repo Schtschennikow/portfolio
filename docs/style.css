@@ -16,8 +16,10 @@ li {
 }
 
 ul {
+    width: 90%;
     margin-left: 21px;
     padding: 0;
+    /* background-color: lightblue; */
 }
 
 iframe {
@@ -25,6 +27,20 @@ iframe {
     width: 100%;
     height: 100px;
     background-color: white;
+}
+
+#limb {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    display: none;
+    background-color: white;
+    opacity: 0.5;
+    z-index: 100;
+}
+
+#showImg {
+    box-shadow: #212226 0px 0px 50px;
 }
 
 #mainContent {
@@ -39,11 +55,24 @@ iframe {
 
 #content {
     position: relative;
-    /* display:flex; */
     width: 75%;
     margin-left: 1%;
-    /* background-color: gainsboro; */
-    /* opacity: 0.75; */
+}
+
+#showConteiner {
+    position: fixed;
+    display: none;
+    justify-content : space-around;
+    align-items: center;
+    height: 100vh;
+    /* background-color: lightpink; */
+    /* opacity: 0.5; */
+    z-index: 110;
+}
+
+.centerImg {
+    display: block;
+    margin: auto;
 }
 
 #menu {
@@ -53,7 +82,8 @@ iframe {
     top: 0;
     width: 23%;
     height: 100vh;
-    /* background-color: lightsalmon; */
+    z-index: 110;
+    /* background-color: greenyellow; */
 }
 
 #menuFix {
@@ -66,6 +96,14 @@ iframe {
     height: 60vh;
     bottom: 0;
     /* background-color: thistle; */
+}
+
+#info {
+    position: relative;
+    height: 100%;
+    left: 21px;
+    visibility: hidden;
+    /* background-color: lawngreen; */
 }
 
 #li0div {
@@ -163,6 +201,7 @@ iframe {
 .square {
     position: relative;
     width: 100%;
+    z-index: 90;
     /* background-size: contain; */
     /* background-color: bisque; */
 }
@@ -170,13 +209,14 @@ iframe {
 .squareSmall {
     position: relative;
     width: 100%;
-    /* padding-bottom: 100%; */
-    /* background-color: bisque; */
+    z-index: 90;
+    border: 2px solid transparent;
 }
 
 .rect {
     position: relative;
     width: 200%;
+    z-index: 90;
     /* background-size: contain; */
     /* background-color: bisque; */
 }
