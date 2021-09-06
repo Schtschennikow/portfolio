@@ -1,9 +1,9 @@
-var test = true;
+var menuOnScroll = true;
 
 $(document).on(
     "click", ".mli",  function() {
 
-        test = false;
+        menuOnScroll = false;
 
         $( ".mli" ).removeClass("textBig").addClass("textSmall");
         $( this ).removeClass("textSmall").addClass("textBig");
@@ -16,7 +16,7 @@ $(document).on(
 
         setTimeout(
             function() {
-                test = true;
+                menuOnScroll = true;
             },
             250
         );
@@ -24,7 +24,8 @@ $(document).on(
     }
 );
 
-var lastId,
+var lastId = "";
+
 scrollItems = $( ".lidiv" ).map(
     function() {
         return $(this).attr("id");
@@ -40,12 +41,15 @@ $(window).scroll(function(){
         return this;
     });
     
-    id = cur[cur.length-1];
+    id = cur[cur.length-1].toString();
+
     
     if (lastId !== id) {
         lastId = id;
 
-        if (test) {
+        desactivate(true);
+
+        if (menuOnScroll) {
             $( ".mli" ).removeClass("textBig").addClass("textSmall");
             $( `#${id.replace("div", "")}` ).removeClass("textSmall").addClass("textBig");
         };
@@ -78,9 +82,9 @@ function loadPics(path, dest, cols, isInter, suf) {
 
         $.each( json, function( i, val ) {
 
-            ind = `g${i}${suf}`
+            var ind = `g${i}${suf}`;
 
-            cntnr = $( "<div>", {
+            var cntnr = $( "<div>", {
                 "id": `${ind}cntnr`,
                 "class": `${val.mode} cntnr`,
                 "height": `${sqW}px` 
@@ -90,26 +94,28 @@ function loadPics(path, dest, cols, isInter, suf) {
                 "id": `${ind}schtsch`,
             }).appendTo( cntnr );
 
-            showCntnr = $( "<div>", {
+            var showCntnr = $( "<div>", {
                 "id": `${ind}showCntnr`,
                 "class": "showCntnr",
             }).appendTo( cntnr );
 
-            $( "<img>", {
+            var curImage = $( "<img>", {
+                // "id": `${ind}img`,
                 "src": val.pic,
                 "height": "100%",
                 "width": "100%"
             }).appendTo( showCntnr );
 
             if (isInter) {
+
+                curImage.attr("class", "activeImg");
                 
                 $( "<div>", {
                     "id": ind,
                     "class": "show textBig wh intTextWh",
-                    "hidden": "true",
                     "href": val.link,
                     html: "Activate"
-                }).appendTo( showCntnr );
+                }).css({display: "none"}).appendTo( showCntnr );
             }
 
             data[ind] = {
@@ -150,12 +156,14 @@ $(document).on(
 
 $(document).on(
     "mouseover", ".square, .rect", function() {
-        $(`#${$( this ).attr("id").replace("cntnr", "")}`).removeAttr("hidden");
+        curId = `#${$( this ).attr("id").replace("cntnr", "")}`;
+        $( curId ).css({display: ""})
     }
 );
 $(document).on(
     "mouseleave", ".square, .rect", function() {
-        $(`#${$( this ).attr("id").replace("cntnr", "")}`).attr("hidden", "ture");
+        curId = `#${$( this ).attr("id").replace("cntnr", "")}`;
+        $( curId ).css({display: "none"})
     }
 );
 
@@ -172,16 +180,30 @@ function delSchtsch(curId) {
     timer.remove()  
 };
 
+function desactivate(fadeIt) {
+    var activeX = $( ".x" );
+
+    if (activeX.length) {
+        curId = activeX.attr("id");
+        closer(curId, fadeIt);
+    };
+
+};
+
 
 $(document).on(
     "click", ".show", function() {
 
-        let curId = $( this ).attr("id");
+        var curId = $( this ).attr("id");
+            // cutImg = $( `#${curId}img`);
+
+        desactivate(false);
 
         addSchtsch(curId);
 
-        $( `#${curId}showCntnr` ).attr("hidden", "true");
+        $( `#${curId}showCntnr` ).css({display: "none"}).css({opacity: 0.5});
 
+        // adding iframe
         var curfFrame = $( "<iframe>", {
             "id": `${curId}intrctv`,
             "height": "100%",
@@ -196,36 +218,58 @@ $(document).on(
                 function() {
                     curfFrame.css({visibility: "visible"})
                     curfFrame.animate({opacity: 1}, 500);
+                    
+                    fadeOutActiveImg();
                     delSchtsch(curId);
+
+                    // adding x
+                    addX(curId);
                 },
                 500
             )
         });
-
-        $( "<span>", {
-            "id": `${curId}close`,
-            "class": "x textBig wh intTextWh",
-
-            html: "✕"
-
-        }).appendTo( 
-            $( "<div>", {
-                "class": "close"
-            }).appendTo( $( `#${curId}cntnr` ) )
-        );
     }
 );
 
+function fadeOutActiveImg() {
+    $( ".activeImg" ).animate({opacity: 0.5}, 500);
+};
+
+function fadeInActiveImg() {
+    $( ".activeImg" ).animate({opacity: 1}, 500);
+};
+
+function addX(curId) {
+    var xDiv = $( "<div>", {
+        "class": "close"
+    }).appendTo( $( `#${curId}cntnr` ) );
+
+    $( "<span>", {
+        "id": `${curId}close`,
+        "class": "x textBig wh intTextWh",
+
+        html: "✕"
+    }).appendTo( xDiv );
+};
+
+function closer(curId, fadeIt) {
+    xDiv = $( `#${curId}` ).parent();
+
+    $( `#${curId.replace("close", "showCntnr")}` ).css({display: ""}).animate({opacity: 1}, 500);;
+
+    var curFrame = $( `#${curId.replace("close", "intrctv")}` );
+
+    xDiv.remove();
+    curFrame.remove();
+
+    if (fadeIt) {
+        fadeInActiveImg();
+    }  
+};
+
 $(document).on(
     "click", ".x",  function() {
-
         let curId = $( this ).attr("id");
-
-        $( `#info` ).remove();
-
-        $( `#${curId.replace("close", "showCntnr")}` ).removeAttr("hidden");
-        $( `#${curId.replace("close", "intrctv")}` ).remove();
-        $( this ).remove();
-        
+        closer(curId, true);
     }
 );
