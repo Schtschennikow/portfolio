@@ -298,9 +298,6 @@ $(document).on(
             "frameborder": 0
         }).css({visibility: "hidden", "opacity": 0}).appendTo( cntnr );
 
-        // adding x
-        addX(curId);
-
         curfFrame.on("load", function() {
             setTimeout(
                 function() {
@@ -309,6 +306,9 @@ $(document).on(
                     
                     fadeOutActiveImg();
                     delSchtsch(curId);
+
+                    // adding x
+                    addX(curId);
 
                 },
                 500
