@@ -21,6 +21,7 @@ ul {
     width: 90%;
     margin-left: 21px;
     padding: 0;
+    min-block-size: 30vh;
     /* background-color: lightblue; */
 }
 
@@ -101,7 +102,7 @@ iframe {
 } */
 
 #info {
-    position: relative;
+    position: absolute;
     height: 100%;
     left: 21px;
     visibility: hidden;
