@@ -66,7 +66,7 @@ function fixW() {
     $( "#showConteiner" ).css({"width": `${ cw }px`});
 
     $( "#menuFix" ).css({"width": `${ mw }px`});
-    $( "#infoFix" ).css({"width": `${ mw }px`});
+    // $( "#infoFix" ).css({"width": `${ mw }px`});
     $( "#info" ).css({"width": `${ mw - 21 }px`});
 };
 
@@ -78,22 +78,30 @@ function loadPics(path, dest, cols, isInter, suf) {
     $.getJSON(path, function(json) {
 
         var contentW = $("#content").width(),
-            sqW;
+            sqW,
+            sqWc;
 
         if (cols == 4) {
-            sqW = (contentW - contentW * 0.0025 * 3) / 4;
+            sqW = (contentW - (2.5 * 3)) / 4;
         } else {
-            sqW = (contentW - contentW * 0.0025) / 2;
+            sqW = (contentW - 2.5) / 2;
         }
 
         $.each( json, function( i, val ) {
 
             var ind = `g${i}${suf}`;
 
+            if (val.mode == "rect") {
+                sqWc = contentW;
+            } else {
+                sqWc = sqW;
+            }
+
             var cntnr = $( "<div>", {
                 "id": `${ind}cntnr`,
                 "class": `${val.mode} cntnr`,
-                "height": `${sqW}px` 
+                "height": `${sqW}px`,
+                "width": `${sqWc}px`
             }).appendTo( `#${dest}` );
 
             $( "<div>", {
@@ -103,6 +111,8 @@ function loadPics(path, dest, cols, isInter, suf) {
             var showCntnr = $( "<div>", {
                 "id": `${ind}showCntnr`,
                 "class": "showCntnr",
+                "height": sqW,
+                "width": sqWc
             }).appendTo( cntnr );
 
             var curImage = $( "<img>", {
@@ -119,7 +129,7 @@ function loadPics(path, dest, cols, isInter, suf) {
                     "id": ind,
                     "class": "show textBiger wh intTextWh",
                     "href": val.link,
-                    html: "⏻"
+                    html: "&#9654;"
                 }).css({display: "none"}).appendTo( showCntnr );
             }
 
@@ -271,17 +281,21 @@ $(document).on(
 
         addSchtsch(curId);
 
+        var cntnr = $( `#${curId}cntnr` ),
+            w = cntnr.width(),
+            h = cntnr.height();
+
         $( `#${curId}showCntnr` ).css({display: "none"}).css({opacity: 0.5});
 
         // adding iframe
         var curfFrame = $( "<iframe>", {
             "id": `${curId}intrctv`,
-            "height": "100%",
-            "width": "100%",
+            "height": h,
+            "width": w,
             "class": "interGr",
             "src": $( this ).attr("href"),
             "frameborder": 0
-        }).css({visibility: "hidden", "opacity": 0}).appendTo( $( `#${curId}cntnr` ) );
+        }).css({visibility: "hidden", "opacity": 0}).appendTo( cntnr );
 
         // adding x
         addX(curId);
@@ -345,3 +359,16 @@ $(document).on(
         closer(curId, true);
     }
 );
+
+window.onresize = function () {
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(function () {
+        location.reload();
+    }, 0);
+};
+
+// window.onresize = function(){
+//     window.location = window.location;
+// };
+
+// $(window).on('resize',function(){location.reload();});
