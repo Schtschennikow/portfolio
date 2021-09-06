@@ -106,7 +106,6 @@ function loadPics(path, dest, cols, isInter, suf) {
             }).appendTo( cntnr );
 
             var curImage = $( "<img>", {
-                // "id": `${ind}img`,
                 "src": val.pic,
                 "height": "100%",
                 "width": "100%"
@@ -118,9 +117,9 @@ function loadPics(path, dest, cols, isInter, suf) {
                 
                 $( "<div>", {
                     "id": ind,
-                    "class": "show textBig wh intTextWh",
+                    "class": "show textBiger wh intTextWh",
                     "href": val.link,
-                    html: "Activate"
+                    html: "⏻"
                 }).css({display: "none"}).appendTo( showCntnr );
             }
 
