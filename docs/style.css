@@ -86,6 +86,12 @@ iframe {
     grid-gap: 0.25%;
 }
 
+.cntnr {
+    display: table-cell; 
+    vertical-align: middle; 
+    text-align: center;
+}
+
 .col4 {
     /* position: relative; */
     display: grid;
