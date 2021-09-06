@@ -26,6 +26,9 @@
             </div>
 
             <div id="infoFix">
+                <!-- <div id="info" class="info" hidden="true">
+                    AAA
+                </div> -->
             </div>
 
         </div>
@@ -169,7 +172,7 @@
 
                     cntnr = $( "<div>", {
                         "id": `${ind}cntnr`,
-                        "class": `${val.mode} pikpook`,
+                        "class": `${val.mode}`,
                         "height": `${sqW}px` 
                     }).appendTo( `#${dest}` );
 
@@ -238,40 +241,6 @@
         $(document).on(
             "mouseleave", ".square, .rect", function() {
                 $(`#${$( this ).attr("id").replace("cntnr", "")}`).attr("hidden", "ture");
-            }
-        );
-
-        $(document).on(
-            "mouseover", ".pikpook", function() {
-
-                ind = `${$( this ).attr("id").replace("cntnr", "")}`
-
-                // console.log(ind);
-
-                var infoDiv = $("<div>", {
-                    "id": "info",
-                    "class": "info"
-                }).appendTo( $( "#infoFix" ) );
-
-                $( "<span>", {
-                    "class": "textSmall",
-                    html: "About:<br>"
-                }).appendTo( infoDiv );
-
-                $( "<span>", {
-                    "class": "textSmaller",
-                    // html: "text"
-                    html: data[ind]["text"]
-                }).appendTo( infoDiv );
-
-            }
-        );
-        $(document).on(
-            "mouseout", ".pikpook", function() {
-
-                // ind = `${$( this ).attr("id").replace("cntnr", "")}`
-
-                $( `#info` ).remove();
             }
         );
         

@@ -158,21 +158,21 @@ iframe {
     position: relative;
     width: 100%;
     /* background-size: contain; */
-    background-color: bisque;
+    /* background-color: bisque; */
 }
 
 .squareSmall {
     position: relative;
     width: 100%;
     /* padding-bottom: 100%; */
-    background-color: bisque;
+    /* background-color: bisque; */
 }
 
 .rect {
     position: relative;
     width: 200%;
     /* background-size: contain; */
-    background-color: bisque;
+    /* background-color: bisque; */
 }
 
 .showCntnr {
