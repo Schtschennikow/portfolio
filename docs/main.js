@@ -117,6 +117,7 @@ function loadPics(path, dest, cols, isInter, suf) {
 
             var curImage = $( "<img>", {
                 "src": val.pic,
+                "class": "centerImg",
                 "height": "100%",
                 "width": "100%"
             }).appendTo( showCntnr );

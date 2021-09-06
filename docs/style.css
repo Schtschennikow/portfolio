@@ -43,6 +43,12 @@ iframe {
 }
 
 #showImg {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
     box-shadow: #212226 0px 0px 50px;
 }
 
@@ -74,6 +80,12 @@ iframe {
 }
 
 .centerImg {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
     display: block;
     margin: auto;
 }
