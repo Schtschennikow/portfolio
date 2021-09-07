@@ -50,6 +50,8 @@ iframe {
     -ms-user-select: none;
     user-select: none;
     box-shadow: #212226 0px 0px 50px;
+    max-height: 710px;
+    height: 90%;
 }
 
 #mainContent {
