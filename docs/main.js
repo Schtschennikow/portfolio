@@ -405,15 +405,9 @@ $(document).on(
     }
 );
 
-window.onresize = function () {
-    clearTimeout(this.timeout);
-    this.timeout = setTimeout(function () {
-        location.reload();
-    }, 0);
-};
-
-// window.onresize = function(){
-//     window.location = window.location;
+// window.onresize = function () {
+//     clearTimeout(this.timeout);
+//     this.timeout = setTimeout(function () {
+//         location.reload();
+//     }, 0);
 // };
-
-// $(window).on('resize',function(){location.reload();});

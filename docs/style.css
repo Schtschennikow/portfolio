@@ -52,7 +52,7 @@ iframe {
     user-select: none;
     box-shadow: #212226 0px 0px 50px;
     max-height: 710px;
-    max-width: 90%;
+    max-width: 90vw;
     height: 90%;
 }
 
@@ -91,25 +91,25 @@ iframe {
 }
 
 #ra {
+    display: none;
     position: absolute;
     cursor: pointer;
     text-align: left;
     right: 0;
     height: 100%;
     width: 10%;
-    display: flex;
     justify-content: center;
     align-items: center;
 }
 
 #la {
+    display: none;
     position: absolute;
     cursor: pointer;
     text-align: left;
     left: 0;
     height: 100%;
     width: 10%;
-    display: flex;
     justify-content: center;
     align-items: center;
 }
@@ -401,6 +401,10 @@ a:hover {
     }
 
     #menu {
-        display: inline;
+        display: flex;
+    }
+
+    #la, #ra {
+        display: flex;
     }
 }
