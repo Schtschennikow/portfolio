@@ -256,6 +256,8 @@ $(document).on(
 
         smalPicsListener = false;
 
+        $('body').bind('touchmove', function(e){e.preventDefault()});
+
         var showConteiner = $( "#showConteiner" );
         showConteiner.css( {display: "flex"} );
         $( "#limb" ).fadeIn("fast");
@@ -281,6 +283,8 @@ function changePic(ob) {
 function killShowConteiner() {
 
     smalPicsListener = true;
+
+    $('body').unbind('touchmove')
 
     var showConteiner = $( ".showConteiner" );
 
