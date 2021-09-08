@@ -5,11 +5,13 @@ var curMode;
 var modes = {
     desc: {
         "col4" : 4,
-        "col2" : 2
+        "col2" : 2,
+        "res" : true
     },
     mob: {
         "col4" : 3,
-        "col2" : 1
+        "col2" : 1,
+        "res" : false
     },
 };
 
@@ -405,9 +407,11 @@ $(document).on(
     }
 );
 
-// window.onresize = function () {
-//     clearTimeout(this.timeout);
-//     this.timeout = setTimeout(function () {
-//         location.reload();
-//     }, 0);
-// };
+window.onresize = function () {
+    if ( curMode["res"] ) {
+        clearTimeout(this.timeout);
+        this.timeout = setTimeout(function () {
+            location.reload();
+        }, 0);
+    }
+};
