@@ -277,7 +277,7 @@ $(document).on(
 );
 
 $(document).on(
-    "click", "#la",  function(e) {
+    "click", ".la",  function(e) {
         if (e.target.id !== "showImg") {
             sourceOb = $( `#${$( "#showImg" ).attr( "href" )}` );
             changePic( sourceOb.prev() );
@@ -286,7 +286,7 @@ $(document).on(
 );
 
 $(document).on(
-    "click", "#ra",  function(e) {
+    "click", ".ra",  function(e) {
         if (e.target.id !== "showImg") {
             sourceOb = $( `#${$( "#showImg" ).attr( "href" )}` );
             changePic( sourceOb.next() );
