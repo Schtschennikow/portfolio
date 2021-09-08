@@ -205,10 +205,15 @@ iframe {
     min-height: 50vh;
 }
 
+hr {
+    width: 100%;
+    margin-top: 50px;
+}
+
 .subHeader {
     position: relative;
     margin-top: 15px;
-    padding-top: 100px;
+    padding-top: 50px;
     padding-bottom: 100px;
     /* background-color: gold; */
 }
