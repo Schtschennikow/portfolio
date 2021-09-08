@@ -159,9 +159,6 @@ h2 {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    /* display: block; */
-    /* margin: auto; */
-    /* max-width: 100%; */
 }
 
 #menu {
@@ -209,9 +206,16 @@ h2 {
 }
 
 .cntnr {
-    display: table-cell; 
-    vertical-align: middle; 
-    text-align: center;
+    /* display: table-cell;  */
+    /* vertical-align: middle;  */
+    /* text-align: center; */
+
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 }
 
 .col4 {

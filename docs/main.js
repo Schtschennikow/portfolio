@@ -135,7 +135,6 @@ function loadPics(path, dest, cols, isInter, suf) {
                 }
             }
             
-
             var cntnr = $( "<div>", {
                 "id": `${ind}cntnr`,
                 "class": `${val.mode} cntnr`,
@@ -145,9 +144,7 @@ function loadPics(path, dest, cols, isInter, suf) {
 
             $( "<div>", {
                 "id": `${ind}schtsch`,
-                // "height": sqW,
-                // "width": sqW,
-                // "class": "gifConteiner"
+                "class": "gifConteiner"
             }).appendTo( cntnr );
 
             var showCntnr = $( "<div>", {
@@ -168,12 +165,17 @@ function loadPics(path, dest, cols, isInter, suf) {
 
                 curImage.attr("class", "activeImg");
                 
-                $( "<div>", {
+                showB = $( "<div>", {
                     "id": ind,
                     "class": "show textBiger intTextWh",
                     "href": val.link,
                     html: "&#9654;"
-                }).css({display: "none"}).appendTo( showCntnr );
+                }).appendTo( showCntnr );
+
+                if (curMode.mode == "mode") {
+                    showB.css({display: "none"})
+                };
+
             }
 
             data[ind] = {
@@ -191,14 +193,18 @@ loadPics("./interactive_content.json", "li1divCntnt", "col2", true, "I");
 
 $(document).on(
     "mouseover", ".square, .rect", function() {
-        curId = `#${$( this ).attr("id").replace("cntnr", "")}`;
-        $( curId ).css({display: ""})
+        if (curMode.mode == "mode") {
+            curId = `#${$( this ).attr("id").replace("cntnr", "")}`;
+            $( curId ).css({display: ""})
+        };
     }
 );
 $(document).on(
     "mouseleave", ".square, .rect", function() {
-        curId = `#${$( this ).attr("id").replace("cntnr", "")}`;
-        $( curId ).css({display: "none"})
+        if (curMode.mode == "mode") {
+            curId = `#${$( this ).attr("id").replace("cntnr", "")}`;
+            $( curId ).css({display: "none"})
+        };
     }
 );
 
@@ -231,9 +237,14 @@ function killInfo() {
 function addSchtsch(curId) {
     var timer = $( "<img>", {
         "src": "./pics/schtsch.gif",
-        "class": "centerImg",
-        "height": "100%"
-    }).appendTo( $( `#${curId}schtsch` ) ); 
+        "class": "centerImg"
+    }).appendTo( $( `#${curId}schtsch` ) );
+
+    if (curMode.mode == "mode") {
+        timer.attr("height", "100%");
+    } else {
+        timer.attr("width", "100%");
+    };
 };
 
 function delSchtsch(curId) {
