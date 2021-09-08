@@ -419,6 +419,47 @@ function closer(curId, fadeIt) {
 
 };
 
+var current = 0,
+    startX = '',
+    startY = '',
+    endX = '',
+    endY = '';
+    swipeDuration = 500,
+    swipeDistanceX = 50,
+    swipeDistanceY = 50,
+    thresholdX = 30,
+    thresholdY = 30; 
+
+$(document).on(
+    "touchstart", "#showImg", function (e, ui) {
+
+        startX = e.originalEvent.touches[0].pageX;
+        startY = e.originalEvent.touches[0].pageY;
+        start = new Date().getTime();
+
+}).on("touchmove", "#showImg", function (e, ui) {
+
+    e.preventDefault();
+
+}).on("touchend", "#showImg", function (e, ui) {
+    endX = e.originalEvent.changedTouches[0].pageX;
+    endY = e.originalEvent.changedTouches[0].pageY;
+    end = new Date().getTime();
+    if ((end - start) < swipeDuration) {
+      if (startX > endX && Math.abs(startY - endY) <= thresholdY && Math.abs(startX - endX) >= swipeDistanceX) {
+        sourceOb = $( `#${$( "#showImg" ).attr( "href" )}` );
+        changePic( sourceOb.next() );
+      } else if (startX < endX && Math.abs(startY - endY) <= thresholdY && Math.abs(startX - endX) >= swipeDistanceX) {
+        sourceOb = $( `#${$( "#showImg" ).attr( "href" )}` );
+        changePic( sourceOb.prev() );
+      } else if (startY > endY && Math.abs(startX - endX) <= thresholdX && Math.abs(startY - endY) >= swipeDistanceY) {
+        killShowConteiner();
+      } else if (startY < endY && Math.abs(startX - endX) <= thresholdX && Math.abs(startY - endY) >= swipeDistanceY) {
+        killShowConteiner();
+      }
+    }
+});
+
 $(document).on(
     "click", ".x",  function() {
         let curId = $( this ).attr("id");
