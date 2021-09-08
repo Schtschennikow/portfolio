@@ -63,9 +63,7 @@ h2 {
     -ms-user-select: none;
     user-select: none;
     box-shadow: #212226 0px 0px 50px;
-    max-height: 710px;
     max-width: 90vw;
-    height: 90%;
 }
 
 #mainContent {
@@ -145,6 +143,15 @@ h2 {
     opacity: 1;
 }
 
+/* .gifConteiner {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+} */
+
 .centerImg {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -152,8 +159,9 @@ h2 {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    display: block;
-    margin: auto;
+    /* display: block; */
+    /* margin: auto; */
+    /* max-width: 100%; */
 }
 
 #menu {
@@ -412,6 +420,12 @@ a:hover {
 
     .rect {
         grid-column: span 2;
+    }
+
+    #showImg {
+        max-height: 710px;
+        height: 90%;
+        max-width: auto;
     }
 
     #menu {

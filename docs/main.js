@@ -6,12 +6,14 @@ var modes = {
     desc: {
         "col4" : 4,
         "col2" : 2,
-        "res" : true
+        "res" : true,
+        "mode" : "mode"
     },
     mob: {
         "col4" : 3,
         "col2" : 1,
-        "res" : false
+        "res" : false,
+        "mode" : "modeM"
     },
 };
 
@@ -102,7 +104,8 @@ function loadPics(path, dest, cols, isInter, suf) {
 
         var contentW = $("#content").width(),
             sqW,
-            sqWc;
+            sqWc,
+            sqWh;
 
         if (cols == "col4") {
             sqW = (contentW - (2.5 * curMode[cols]-1)) / curMode[cols];
@@ -114,27 +117,43 @@ function loadPics(path, dest, cols, isInter, suf) {
 
             var ind = `g${i}${suf}`;
 
-            if (val.mode == "rect") {
-                sqWc = contentW;
+            if (curMode["mode"] == "mode") {
+                if (val[curMode["mode"]] == "rect") {
+                    sqWc = contentW;
+                    sqWh = sqW;
+                } else {
+                    sqWc = sqW;
+                    sqWh = sqW;
+                }
             } else {
-                sqWc = sqW;
+                if (val[curMode["mode"]] == "rect") {
+                    sqWc = sqW;
+                    sqWh = sqW * 1.5;
+                } else {
+                    sqWc = sqW;
+                    sqWh = sqW;
+                }
             }
+            
 
             var cntnr = $( "<div>", {
                 "id": `${ind}cntnr`,
                 "class": `${val.mode} cntnr`,
-                "height": `${sqW}px`,
+                "height": `${sqWh}px`,
                 "width": `${sqWc}px`
             }).appendTo( `#${dest}` );
 
             $( "<div>", {
                 "id": `${ind}schtsch`,
+                // "height": sqW,
+                // "width": sqW,
+                // "class": "gifConteiner"
             }).appendTo( cntnr );
 
             var showCntnr = $( "<div>", {
                 "id": `${ind}showCntnr`,
                 "class": "showCntnr",
-                "height": sqW,
+                "height": sqWh,
                 "width": sqWc
             }).css({overflow: "hidden"}).appendTo( cntnr );
 

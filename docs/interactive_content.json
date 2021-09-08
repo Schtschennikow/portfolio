@@ -12,27 +12,31 @@
         "text" : "Not Mask.",
         "pic" : "./picsInteractiveContent/PictorialChart0001.png",
         "link" : "./PictorialChart0001/index.html",
-        "mode" : "square"
+        "mode" : "square",
+        "modeM" : "square"
     },
     {
         "title" : "Шпилькин",
         "text" : "Same shit.",
         "pic" : "./picsInteractiveContent/LineChart0002.png",
         "link" : "./LineChart0002/index.html",
-        "mode" : "square"
+        "mode" : "square",
+        "modeM" : "rect"
     },
     {
         "title" : "Депутатовка",
         "text" : "The best map.",
         "pic" : "./picsInteractiveContent/HexMap0001.png",
         "link" : "./HexMap0001/index.html",
-        "mode" : "square"
+        "mode" : "square",
+        "modeM" : "square"
     },
     {
         "title" : "ОБСЕ",
         "text" : "The best Scroll.",
         "pic" : "./picsInteractiveContent/Scroll0001.png",
         "link" : "./Scroll0001/index.html",
-        "mode" : "rect"
+        "mode" : "rect",
+        "modeM" : "rect"
     }
 ]
