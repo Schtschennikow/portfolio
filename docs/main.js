@@ -270,7 +270,9 @@ $(document).keyup(function(e) {
 
 $(document).on(
     "click", "#limb, .showConteiner",  function(e) {
-        if (e.target.id !== "showImg" && e.target.id !== "la" && e.target.id !== "ra") {
+        if (e.target.id !== "showImg" &&
+            !e.target.classList.contains("la") &&
+            !e.target.classList.contains("ra")) {
             killShowConteiner();
         }
     }
