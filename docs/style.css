@@ -33,6 +33,18 @@ iframe {
     background-color: white;
 }
 
+h2 {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    font-size: 42px;
+    font-family: 'Roboto', sans-serif;
+    font-weight:400;
+}
+
 #limb {
     position: fixed;
     width: 100vw;
@@ -214,8 +226,8 @@ hr {
 .subHeader {
     position: relative;
     margin-top: 15px;
-    padding-top: 50px;
-    padding-bottom: 100px;
+    /* padding-top: 50px; */
+    padding-bottom: 42px;
     /* background-color: gold; */
 }
 
@@ -301,20 +313,17 @@ hr {
 
 .square {
     position: relative;
-    width: 100%;
     z-index: 90;
 }
 
 .squareSmall {
     cursor: pointer;
     position: relative;
-    width: 100%;
     z-index: 90;
 }
 
 .rect {
     position: relative;
-    width: 200%;
     z-index: 90;
     grid-column: span 1;
 }
@@ -384,8 +393,13 @@ a:hover {
     h1 {
         font-size: 150px
     }
+
+    h2 {
+        display: none;
+    }
+
     .col4 {
-        grid-template-columns: [column1] 1fr [column2] 1fr [column3] 1fr [column3] 1fr;
+        grid-template-columns: repeat(4, 1fr);
     }
 
     #content {
@@ -393,7 +407,7 @@ a:hover {
     }
 
     #li1divCntnt {
-        grid-template-columns: [column1] 1fr [column2] 1fr;
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .rect {
@@ -406,5 +420,12 @@ a:hover {
 
     #la, #ra {
         display: flex;
+    }
+
+    .subHeader {
+        position: relative;
+        margin-top: 15px;
+        padding-top: 50px;
+        padding-bottom: 100px;
     }
 }

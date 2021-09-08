@@ -4,7 +4,8 @@
         "text" : "What do we eat.",
         "pic" : "./picsInteractiveContent/YeastDiagram0001.png",
         "link" : "./YeastDiagram0001/index.html",
-        "mode" : "square"
+        "mode" : "square",
+        "modeM" : "square"
     },
     {
         "title" : "Рогозин",
