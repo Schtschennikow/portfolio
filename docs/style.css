@@ -8,13 +8,14 @@ h1 {
     padding: 0px;
     line-height: 1;
     font-weight:700;
-    font-size: 150px;
+    font-size: 50px;
     margin-bottom: 0;
 }
 
 li {
     cursor: pointer;
     list-style-type: none;
+    z-index: 110;
 }
 
 ul {
@@ -22,7 +23,7 @@ ul {
     margin-left: 21px;
     padding: 0;
     min-block-size: 30vh;
-    /* background-color: lightblue; */
+    /* background-color: crimson; */
 }
 
 iframe {
@@ -66,7 +67,7 @@ iframe {
 
 #content {
     position: relative;
-    width: 75%;
+    width: 98%;
     margin-left: 1%;
 }
 
@@ -76,9 +77,59 @@ iframe {
     justify-content : space-around;
     align-items: center;
     height: 100vh;
-    /* background-color: lightpink; */
-    /* opacity: 0.5; */
     z-index: 110;
+}
+
+#showConteinerDiv {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+#ra {
+    position: absolute;
+    cursor: pointer;
+    text-align: left;
+    right: 0;
+    height: 100%;
+    width: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#la {
+    position: absolute;
+    cursor: pointer;
+    text-align: left;
+    left: 0;
+    height: 100%;
+    width: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* #x {
+    position: absolute;
+    cursor: pointer;
+    text-align: left;
+    top: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} */
+
+.hiddenIteractives {
+    opacity: 0;
+}
+
+.hiddenIteractives:hover {
+    opacity: 1;
 }
 
 .centerImg {
@@ -94,6 +145,7 @@ iframe {
 
 #menu {
     position: absolute;
+    display: none;
     margin-right: 1%;
     right: 0;
     top: 0;
@@ -107,13 +159,6 @@ iframe {
     position: fixed;
     /* background-color: thistle; */
 }
-
-/* #infoFix {
-    position: fixed;
-    height: 60vh;
-    bottom: 0;
-    background-color: thistle;
-} */
 
 #info {
     position: absolute;
@@ -138,7 +183,7 @@ iframe {
 #li1divCntnt {
     /* position: relative; */
     display: grid;
-    grid-template-columns: [column1] 1fr [column2] 1fr;
+    grid-template-columns: [column1] 1fr;
     grid-gap: 2.5px;
 }
 
@@ -151,7 +196,7 @@ iframe {
 .col4 {
     /* position: relative; */
     display: grid;
-    grid-template-columns: [column1] 1fr [column2] 1fr [column3] 1fr [column3] 1fr;
+    grid-template-columns: [column1] 1fr [column2] 1fr [column3] 1fr;
     grid-gap: 2.5px;
 }
 
@@ -208,6 +253,22 @@ iframe {
     color: #ee9100;
 }
 
+.intText {
+    color: #212226;
+}
+.intText:hover {
+    color: #bf381d;
+}
+
+.intTextWh {
+    color: white;
+    text-shadow: -1px -1px 0 #212226, 1px -1px 0 #212226, -1px 1px 0 #212226, 1px 1px 0 #212226;
+}
+.intTextWh:hover {
+    color: #bf381d;
+    text-shadow: -1px -1px 0 #212226, 1px -1px 0 #212226, -1px 1px 0 #212226, 1px 1px 0 #212226;
+}
+
 .textBig {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -236,8 +297,6 @@ iframe {
     position: relative;
     width: 100%;
     z-index: 90;
-    /* background-size: contain; */
-    /* background-color: bisque; */
 }
 
 .squareSmall {
@@ -251,9 +310,7 @@ iframe {
     position: relative;
     width: 200%;
     z-index: 90;
-    grid-column: span 2;
-    /* background-size: contain; */
-    /* background-color: bisque; */
+    grid-column: span 1;
 }
 
 .showCntnr {
@@ -271,9 +328,6 @@ iframe {
     position: absolute;
     z-index: 100;
     cursor: pointer;
-    /* background-color: #212226; */
-    text-shadow: -1px -1px 0 #212226, 1px -1px 0 #212226, -1px 1px 0 #212226, 1px 1px 0 #212226;
-    /* text-shadow: 0px 0px 5px #212226; */
 }
 
 .x {
@@ -285,9 +339,6 @@ iframe {
     user-select: none;
     text-align: right;
     cursor: pointer;
-    text-shadow: 0px 0px 5px #212226;
-    text-shadow: -1px -1px 0 #212226, 1px -1px 0 #212226, -1px 1px 0 #212226, 1px 1px 0 #212226;
-    /* background-color: #212226; */
 }
 
 .close {
@@ -320,4 +371,30 @@ a:link, a:active, a:visited {
 a:hover {
     color: #bf381d;
     text-decoration: none;
+}
+
+
+@media (min-width: 700px) {
+    h1 {
+        font-size: 150px
+    }
+    .col4 {
+        grid-template-columns: [column1] 1fr [column2] 1fr [column3] 1fr [column3] 1fr;
+    }
+
+    #content {
+        width: 75%;
+    }
+
+    #li1divCntnt {
+        grid-template-columns: [column1] 1fr [column2] 1fr;
+    }
+
+    .rect {
+        grid-column: span 2;
+    }
+
+    #menu {
+        display: inline;
+    }
 }

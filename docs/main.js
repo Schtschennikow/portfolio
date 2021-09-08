@@ -113,12 +113,12 @@ function loadPics(path, dest, cols, isInter, suf) {
                 "class": "showCntnr",
                 "height": sqW,
                 "width": sqWc
-            }).appendTo( cntnr );
+            }).css({overflow: "hidden"}).appendTo( cntnr );
 
             var curImage = $( "<img>", {
                 "src": val.pic,
                 "class": "centerImg",
-                "height": "100%",
+                "height": "auto",
                 "width": "100%"
             }).appendTo( showCntnr );
 
@@ -128,7 +128,7 @@ function loadPics(path, dest, cols, isInter, suf) {
                 
                 $( "<div>", {
                     "id": ind,
-                    "class": "show textBiger wh intTextWh",
+                    "class": "show textBiger intTextWh",
                     "href": val.link,
                     html: "&#9654;"
                 }).css({display: "none"}).appendTo( showCntnr );
@@ -146,28 +146,6 @@ function loadPics(path, dest, cols, isInter, suf) {
 loadPics("./new_content.json", "li3divCntnt", 4, false, "O");
 loadPics("./new_content.json", "li2divCntnt", 4, false, "N");
 loadPics("./interactive_content.json", "li1divCntnt", 2, true, "I");
-
-$(document).on(
-    "mouseover", ".intText", function() {
-        $( this ).removeClass("bl").addClass("red");
-    }
-);
-$(document).on(
-    "mouseleave", ".intText", function() {
-        $( this ).removeClass("red").addClass("bl");
-    }
-);
-
-$(document).on(
-    "mouseover", ".intTextWh", function() {
-        $( this ).removeClass("wh").addClass("red");
-    }
-);
-$(document).on(
-    "mouseleave", ".intTextWh", function() {
-        $( this ).removeClass("red").addClass("wh");
-    }
-);
 
 $(document).on(
     "mouseover", ".square, .rect", function() {
@@ -241,12 +219,22 @@ $(document).on(
         $( "#limb" ).fadeIn("fast");
         showConteiner.addClass("showConteiner");
 
-        var picSrc = $( this ).find( "img" ).attr( "src" );
-        showConteiner.find( "#showImg" ).attr( "src", picSrc );
-        
-        var curId = $( this ).attr("id").replace("cntnr", "");
-        showInfo(curId);
+        changePic($( this ));
 });
+
+function changePic(ob) {
+
+    if (ob.length) {
+        var picSrc = ob.find( "img" ).attr( "src" );
+
+        var showImg = $( "#showImg" );
+        showImg.attr( "src", picSrc );
+        showImg.attr( "href", ob.attr("id") )
+
+        var curId = ob.attr("id").replace("cntnr", "");
+        showInfo(curId);
+    }
+}
 
 function killShowConteiner() {
 
@@ -264,10 +252,44 @@ function killShowConteiner() {
     };
 };
 
+$(document).keyup(function(e) {
+    if (e.key === "Escape") {
+        killShowConteiner();
+   } if (e.keyCode == 39) {
+
+        sourceOb = $( `#${$( "#showImg" ).attr( "href" )}` );
+        changePic( sourceOb.next() );
+
+   } if (e.keyCode == 37) {
+
+        sourceOb = $( `#${$( "#showImg" ).attr( "href" )}` );
+        changePic( sourceOb.prev() );
+
+   }
+});
+
 $(document).on(
     "click", "#limb, .showConteiner",  function(e) {
-        if (e.target.id !== "showImg") {
+        if (e.target.id !== "showImg" && e.target.id !== "la" && e.target.id !== "ra") {
             killShowConteiner();
+        }
+    }
+);
+
+$(document).on(
+    "click", "#la",  function(e) {
+        if (e.target.id !== "showImg") {
+            sourceOb = $( `#${$( "#showImg" ).attr( "href" )}` );
+            changePic( sourceOb.prev() );
+        }
+    }
+);
+
+$(document).on(
+    "click", "#ra",  function(e) {
+        if (e.target.id !== "showImg") {
+            sourceOb = $( `#${$( "#showImg" ).attr( "href" )}` );
+            changePic( sourceOb.next() );
         }
     }
 );
@@ -332,7 +354,7 @@ function addX(curId) {
 
     $( "<span>", {
         "id": `${curId}close`,
-        "class": "x textBig wh intTextWh",
+        "class": "x textBig intTextWh",
 
         html: "✕"
     }).appendTo( xDiv );
@@ -342,7 +364,6 @@ function closer(curId, fadeIt) {
     xDiv = $( `#${curId}` ).parent();
 
     $( `#${curId.replace("close", "showCntnr")}` ).css({display: ""}).animate({opacity: 1}, 500);;
-
     var curFrame = $( `#${curId.replace("close", "intrctv")}` );
 
     xDiv.remove();
