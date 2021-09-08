@@ -166,7 +166,7 @@ function loadPics(path, dest, cols, isInter, suf) {
     });
 }
 
-loadPics("./old_content.json", "li3divCntnt", "col4", false, "O");
+loadPics("./new_content.json", "li3divCntnt", "col4", false, "O");
 loadPics("./new_content.json", "li2divCntnt", "col4", false, "N");
 loadPics("./interactive_content.json", "li1divCntnt", "col2", true, "I");
 
