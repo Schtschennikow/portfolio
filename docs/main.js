@@ -1,5 +1,24 @@
 var menuOnScroll = true;
 
+var curMode;
+
+var modes = {
+    desc: {
+        "col4" : 4,
+        "col2" : 2
+    },
+    mob: {
+        "col4" : 3,
+        "col2" : 1
+    },
+};
+
+if ($( document ).innerWidth() < 700 ) {
+    curMode = modes.mob
+} else {
+    curMode = modes.desc
+}
+
 $(document).on(
     "click", ".mli",  function() {
 
@@ -74,6 +93,8 @@ fixW();
 
 var data = {};
 
+
+
 function loadPics(path, dest, cols, isInter, suf) {
     $.getJSON(path, function(json) {
 
@@ -81,10 +102,10 @@ function loadPics(path, dest, cols, isInter, suf) {
             sqW,
             sqWc;
 
-        if (cols == 4) {
-            sqW = (contentW - (2.5 * 3)) / 4;
+        if (cols == "col4") {
+            sqW = (contentW - (2.5 * curMode[cols]-1)) / curMode[cols];
         } else {
-            sqW = (contentW - 2.5) / 2;
+            sqW = (contentW - 2.5) / curMode[cols];
         }
 
         $.each( json, function( i, val ) {
@@ -143,9 +164,9 @@ function loadPics(path, dest, cols, isInter, suf) {
     });
 }
 
-loadPics("./new_content.json", "li3divCntnt", 4, false, "O");
-loadPics("./new_content.json", "li2divCntnt", 4, false, "N");
-loadPics("./interactive_content.json", "li1divCntnt", 2, true, "I");
+loadPics("./new_content.json", "li3divCntnt", "col4", false, "O");
+loadPics("./new_content.json", "li2divCntnt", "col4", false, "N");
+loadPics("./interactive_content.json", "li1divCntnt", "col2", true, "I");
 
 $(document).on(
     "mouseover", ".square, .rect", function() {

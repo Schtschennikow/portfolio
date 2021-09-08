@@ -52,6 +52,7 @@ iframe {
     user-select: none;
     box-shadow: #212226 0px 0px 50px;
     max-height: 710px;
+    max-width: 90%;
     height: 90%;
 }
 
@@ -180,7 +181,7 @@ iframe {
     /* background-color: bisque; */
 }
 
-#li1divCntnt {
+.col2 {
     /* position: relative; */
     display: grid;
     grid-template-columns: [column1] 1fr;
