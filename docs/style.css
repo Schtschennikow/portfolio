@@ -143,15 +143,6 @@ h2 {
     opacity: 1;
 }
 
-/* .gifConteiner {
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-} */
-
 .centerImg {
     -webkit-touch-callout: none;
     -webkit-user-select: none;

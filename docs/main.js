@@ -158,7 +158,9 @@ function loadPics(path, dest, cols, isInter, suf) {
                 "src": val.pic,
                 "class": "centerImg",
                 "height": "auto",
-                "width": "100%"
+                "width": "100%",
+                "loading": "lazy",
+                "alt":val.title
             }).appendTo( showCntnr );
 
             if (isInter) {
@@ -237,7 +239,8 @@ function killInfo() {
 function addSchtsch(curId) {
     var timer = $( "<img>", {
         "src": "./pics/schtsch.gif",
-        "class": "centerImg"
+        "class": "centerImg",
+        "alt": "schtsch"
     }).appendTo( $( `#${curId}schtsch` ) );
 
     if (curMode.mode == "mode") {
